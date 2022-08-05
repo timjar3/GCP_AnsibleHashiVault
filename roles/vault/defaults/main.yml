@@ -1,0 +1,17 @@
+---
+# Package variables
+vault_version: "1.11.1"
+vault_checksum: "sha256:aa2ed532d9a0ecc8635fed63cb3fb6de472b4c01ca622a9a199cd92a046bc73a."
+
+# Preinstallation
+vault_install_prerequisites: ['unzip']
+
+# User Vars
+vault_user: "vault"
+vault_group: "vault"
+
+# Paths
+vault_config_path: "/etc/vault.d/vault.hcl"
+role_path: /etc/vault_role
+vault_bin_path: /usr/local/bin
+vault_log_path: /var/log/vault_audit.log
