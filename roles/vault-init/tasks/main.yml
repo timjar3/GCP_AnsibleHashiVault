@@ -10,10 +10,16 @@
     state: directory
   delegate_to: localhost
 
-- name: Add a VAULT_ADDR to etc/environment permanent 
+- name: Add a VAULT_ADDR to etc/environment permanent
+  become: yes
+  become_user: root
+  become_method: sudo
   ansible.builtin.lineinfile:
     path: /etc/environment
     line: VAULT_ADDR='http://127.0.0.1:8200'
+  notify:
+    - Reload systemd
+    - Restart vault.service
 
 - name: Initialise Vault operator
   shell: vault operator init -key-shares=5 -key-threshold=3 -format json

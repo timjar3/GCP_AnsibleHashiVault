@@ -8,6 +8,4 @@
 - name: Unseal vault with unseal keys
   shell: |
     vault operator unseal {{ item.stdout }}
-  environment:
-    VAULT_ADDR: "http://127.0.0.1:8200"
   with_items: "{{unseal_keys.results}}"
