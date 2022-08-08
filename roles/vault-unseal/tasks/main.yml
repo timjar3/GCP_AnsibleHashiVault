@@ -9,5 +9,15 @@
   shell: |
     vault operator unseal {{ item.stdout }}
   with_items: "{{unseal_keys.results}}"
-  notify:
-    - Reload systemd
+
+- name: Daemon systemd_reload
+  become: yes
+  become_user: root
+  become_method: sudo
+  command: sudo systemctl daemon-reload
+
+- name: Vault welcome note
+  command: echo "************ WELCOME to HASHICORP VAULT ***************"
+  register: welcome_vault
+
+- debug: msg="{{ welcome_vault }}"
