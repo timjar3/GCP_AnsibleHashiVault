@@ -9,3 +9,5 @@
   shell: |
     vault operator unseal {{ item.stdout }}
   with_items: "{{unseal_keys.results}}"
+  notify:
+    - Reload systemd
