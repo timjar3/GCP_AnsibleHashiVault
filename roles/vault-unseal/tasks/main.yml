@@ -5,7 +5,7 @@
   delegate_to: localhost
   become: no
 
-- name: Vault welcome note
+- name: Vault UNSEALING note
   shell: echo "************ UNSEALING VAULT IN-PROGRESS ***************"
   register: unseal_vault
  
@@ -27,8 +27,11 @@
  
 - debug: msg="{{ welcome_vault }}"
 
-- name: Daemon systemd_reload
+- name: Daemon systemd_reload, verify the vault.service is up and running.
   become: yes
   become_user: root
   become_method: sudo
-  command: sudo systemctl daemon-reload
+  ansible.builtin.systemd:
+    state: restarted
+    daemon_reload: yes
+    name: vault.service
