@@ -5,19 +5,30 @@
   delegate_to: localhost
   become: no
 
+- name: Vault welcome note
+  shell: echo "************ UNSEALING VAULT IN-PROGRESS ***************"
+  register: unseal_vault
+ 
+- debug: msg="{{ unseal_vault }}"
+- pause:
+      seconds: 5
+
 - name: Unseal vault with unseal keys
   shell: |
     vault operator unseal {{ item.stdout }}
   with_items: "{{unseal_keys.results}}"
+
+- pause:
+      seconds: 5
+
+- name: Vault welcome note
+  shell: echo "************ WELCOME to HASHICORP VAULT ***************"
+  register: welcome_vault
+ 
+- debug: msg="{{ welcome_vault }}"
 
 - name: Daemon systemd_reload
   become: yes
   become_user: root
   become_method: sudo
   command: sudo systemctl daemon-reload
-
-- name: Vault welcome note
-  command: echo "************ WELCOME to HASHICORP VAULT ***************"
-  register: welcome_vault
-
-- debug: msg="{{ welcome_vault }}"

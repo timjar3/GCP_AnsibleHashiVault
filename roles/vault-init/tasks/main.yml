@@ -19,7 +19,6 @@
     line: VAULT_ADDR='http://127.0.0.1:8200'
   notify:
     - Reload systemd
-    - Restart vault.service
 
 - name: Initialise Vault operator
   shell: vault operator init -key-shares=5 -key-threshold=3 -format json
