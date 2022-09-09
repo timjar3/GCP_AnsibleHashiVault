@@ -16,7 +16,7 @@
   become_method: sudo
   ansible.builtin.lineinfile:
     path: /etc/environment
-    line: VAULT_ADDR='http://127.0.0.1:8200'
+    line: VAULT_ADDR='http://172.31.34.67:8200'
   notify:
     - Reload systemd
 
@@ -24,7 +24,7 @@
   shell: vault operator init -key-shares=5 -key-threshold=3 -format json
   register: vault_init_results
   environment:
-    VAULT_ADDR: "http://127.0.0.1:8200"
+    VAULT_ADDR: "http://172.31.34.67:8200"
 
 - debug: msg="{{ vault_init_results }}"
 
