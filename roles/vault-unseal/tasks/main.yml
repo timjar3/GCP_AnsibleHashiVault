@@ -21,12 +21,7 @@
 - pause:
       seconds: 10
 
-- name: Vault welcome note if its active
-  ansible.builtin.command: echo "************ WELCOME to HASHICORP VAULT ***************"
-  when: vault.status="active"
-  register: welcome_vault
-  tag: vaultstatus
- 
+
 - debug: msg="{{ welcome_vault }}"
 
 - name: Daemon systemd_reload, verify the vault.service is up and running.
